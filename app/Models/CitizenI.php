@@ -12,6 +12,7 @@ class CitizenI extends Model
     protected $fillable = [
         'cid',
         'bday',
+        'age',
         'p_birth',
         'm_status',
         'gender',

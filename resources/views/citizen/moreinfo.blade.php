@@ -30,7 +30,14 @@ body {
     font-size: 12px;
     width: 100%;
 }
-
+.paper{
+    height: 300px; width: 100%;  background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+}
 </style>
 <div class="content-wrapper">
     <div class="content-header">
@@ -75,6 +82,9 @@ body {
                                 <li class="nav-item">
                                     <a class="nav-link" id="custom-tabs-six-seis-tab" data-toggle="pill" href="#custom-tabs-six-seis" role="tab" aria-controls="custom-tabs-six-seis" aria-selected="false">VI. HEALTH PROFILE</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="custom-tabs-seven-syete-tab" data-toggle="pill" href="#custom-tabs-seven-syete" role="tab" aria-controls="custom-tabs-seven-syete" aria-selected="false">VII. ATTACHMENT</a>
+                                </li>
                             </ul>
                         </div>
                         <div class="card-body">
@@ -108,7 +118,8 @@ body {
                                                     </div>                                                
                                                     <div class="col-3 mt-2">
                                                         <div class="p-1 bg-info gen-label mb-2">3. Date of Birth </div>
-                                                        <input type="date" name="bday" value="{{ $citizenI->bday }}" class="form-control mt2" data-update="bday" data-model="CitizenI" data-cid="{{ $citizen->id }}">
+                                                        <input type="date" name="bday" id="bday" style="width: 75%;" value="{{ $citizenI->bday }}" class="form-control mt2 float-left" data-update="bday" data-model="CitizenI" data-cid="{{ $citizen->id }}">
+                                                        <input type="text" nam="age" id="age" value="{{ $citizenI->age }}" class="form-control text-center mt2 float-right" style="width: 25%;" readonly>
                                                     </div>
                                                     <div class="col-3 mt-2">
                                                         <div class="p-1 bg-info gen-label mb-2">4. Place of birth</div>
@@ -119,8 +130,9 @@ body {
                                                         <select type="text" name="m_status" class="form-control mt2" data-update="m_status" data-model="CitizenI" data-cid="{{ $citizen->id }}">
                                                             <option value="">Select Marital Status</option>
                                                             <option @if($citizenI->m_status == "Single") selected @endif>Single</option>
-                                                            <option @if($citizenI->m_status == "Merraid") selected @endif>Merraid</option>
-                                                            <option @if($citizenI->m_status == "Devorce") selected @endif>Devorce</option>
+                                                            <option @if($citizenI->m_status == "Married") selected @endif>Married</option>
+                                                            <option @if($citizenI->m_status == "Seperated") selected @endif>Seperated</option>
+                                                            <option @if($citizenI->m_status == "Widow") selected @endif>Widow</option>
                                                         </select>
                                                     </div> 
                                                     <div class="col-3 mt-2">
@@ -238,7 +250,7 @@ body {
                                                     </div>
                                                     <div class="col-3" style="margin-top: 28px;">
                                                         <div class="p-1 bg-info gen-label mb-2">12. OSCA ID Number</div>
-                                                        <input type="text" name="osca_idnum" value="{{ $citizenI->osca_idnum }}" class="form-control mb-1" data-update="osca_idnum" data-model="CitizenI" data-cid="{{ $citizen->id }}">
+                                                        <input type="text" name="osca_idnum" value="{{ $citizenI->osca_idnum }}" class="form-control mb-1" data-update="osca_idnum" data-model="CitizenI" data-cid="{{ $citizen->id }}" readonly>
                                                     </div>
                                                     <div class="col-3" style="margin-top: 28px;">
                                                         <div class="p-1 bg-info gen-label mb-2">13. GSIS/SSS</div>
@@ -345,7 +357,7 @@ body {
                                                     </div>
                                                     <div class="col-1">
                                                         <span class="label">Age</span>
-                                                        <input type="text" name="child_age" value="{{ explode(',', $citizenII->child_age)[0] }}" class="form-control" data-update="child_age" data-model="CitizenII" data-array="0" data-cid="{{ $citizen->id }}">
+                                                        <input type="number" name="child_age" value="{{ explode(',', $citizenII->child_age)[0] }}" class="form-control" data-update="child_age" data-model="CitizenII" data-array="0" data-cid="{{ $citizen->id }}">
                                                     </div> 
                                                     <div class="col-2">
                                                         <span class="label">Working</span><br>
@@ -362,7 +374,7 @@ body {
                                                         <input type="number" name="child_income" value="{{ explode(',', $citizenII->child_income)[1] }}" class="form-control" data-update="child_income" data-model="CitizenII" data-array="1" data-cid="{{ $citizen->id }}">
                                                     </div>
                                                     <div class="col-1">
-                                                        <input type="text" name="child_age" value="{{ explode(',', $citizenII->child_age)[1] }}" class="form-control" data-update="child_age" data-model="CitizenII" data-array="1" data-cid="{{ $citizen->id }}">
+                                                        <input type="number" name="child_age" value="{{ explode(',', $citizenII->child_age)[1] }}" class="form-control" data-update="child_age" data-model="CitizenII" data-array="1" data-cid="{{ $citizen->id }}">
                                                     </div> 
                                                     <div class="col-2">
                                                         <input type="checkbox" name="child_working" class="checkbox mt2" value="0" @if(explode(',', $citizenII->child_working)[1]  == "0") checked @endif data-update="child_working" data-array="1" data-model="CitizenII" data-cid="{{ $citizen->id }}"><strong style="padding: 5px;">Yes</strong>
@@ -379,7 +391,7 @@ body {
                                                         <input type="number" name="child_income" value="{{ explode(',', $citizenII->child_income)[2] }}" class="form-control" data-update="child_income" data-model="CitizenII" data-array="2" data-cid="{{ $citizen->id }}">
                                                     </div>
                                                     <div class="col-1">
-                                                        <input type="text" name="child_age" value="{{ explode(',', $citizenII->child_age)[2] }}" class="form-control" data-update="child_age" data-model="CitizenII" data-array="2" data-cid="{{ $citizen->id }}">
+                                                        <input type="number" name="child_age" value="{{ explode(',', $citizenII->child_age)[2] }}" class="form-control" data-update="child_age" data-model="CitizenII" data-array="2" data-cid="{{ $citizen->id }}">
                                                     </div> 
                                                     <div class="col-2">
                                                         <input type="checkbox" name="child_working" class="checkbox mt2" value="0" @if(explode(',', $citizenII->child_working)[2]  == "0") checked @endif data-update="child_working" data-array="2" data-model="CitizenII" data-cid="{{ $citizen->id }}"><strong style="padding: 5px;">Yes</strong>
@@ -396,7 +408,7 @@ body {
                                                         <input type="number" name="child_income" value="{{ explode(',', $citizenII->child_income)[3] }}" class="form-control" data-update="child_income" data-model="CitizenII" data-array="3" data-cid="{{ $citizen->id }}">
                                                     </div>
                                                     <div class="col-1">
-                                                        <input type="text" name="child_age" value="{{ explode(',', $citizenII->child_age)[3] }}" class="form-control" data-update="child_age" data-model="CitizenII" data-array="3" data-cid="{{ $citizen->id }}">
+                                                        <input type="number" name="child_age" value="{{ explode(',', $citizenII->child_age)[3] }}" class="form-control" data-update="child_age" data-model="CitizenII" data-array="3" data-cid="{{ $citizen->id }}">
                                                     </div> 
                                                     <div class="col-2">
                                                         <input type="checkbox" name="child_working" class="checkbox mt2" value="0" @if(explode(',', $citizenII->child_working)[3]  == "0") checked @endif data-update="child_working" data-array="3" data-model="CitizenII" data-cid="{{ $citizen->id }}"><strong style="padding: 5px;">Yes</strong>
@@ -416,11 +428,11 @@ body {
                                                     </div>
                                                     <div class="col-3">
                                                         <span class="label">Income </span>
-                                                        <input type="text" name="depend_income" value="{{ explode(',', $citizenII->depend_income)[0] }}" class="form-control" data-update="depend_income" data-model="CitizenII" data-array="0" data-cid="{{ $citizen->id }}">
+                                                        <input type="number" name="depend_income" value="{{ explode(',', $citizenII->depend_income)[0] }}" class="form-control" data-update="depend_income" data-model="CitizenII" data-array="0" data-cid="{{ $citizen->id }}">
                                                     </div>
                                                     <div class="col-1">
                                                         <span class="label">Age</span>
-                                                        <input type="text" name="depend_age" value="{{ explode(',', $citizenII->depend_age)[0] }}" class="form-control" data-update="depend_age" data-model="CitizenII" data-array="0" data-cid="{{ $citizen->id }}">
+                                                        <input type="number" name="depend_age" value="{{ explode(',', $citizenII->depend_age)[0] }}" class="form-control" data-update="depend_age" data-model="CitizenII" data-array="0" data-cid="{{ $citizen->id }}">
                                                     </div> 
                                                     <div class="col-2">
                                                         <span class="label">Working</span><br>
@@ -435,10 +447,10 @@ body {
                                                         <input type="text" name="depend_occup" value="{{ explode(',', $citizenII->depend_occup)[1] }}" class="form-control" data-update="depend_occup" data-model="CitizenII" data-array="1" data-cid="{{ $citizen->id }}">
                                                     </div>
                                                     <div class="col-3">
-                                                        <input type="text" name="depend_income" value="{{ explode(',', $citizenII->depend_income)[1] }}" class="form-control" data-update="depend_income" data-model="CitizenII" data-array="1" data-cid="{{ $citizen->id }}">
+                                                        <input type="number" name="depend_income" value="{{ explode(',', $citizenII->depend_income)[1] }}" class="form-control" data-update="depend_income" data-model="CitizenII" data-array="1" data-cid="{{ $citizen->id }}">
                                                     </div>
                                                     <div class="col-1">
-                                                        <input type="text" name="depend_age" value="{{ explode(',', $citizenII->depend_age)[1] }}" class="form-control" data-update="depend_age" data-model="CitizenII" data-array="1" data-cid="{{ $citizen->id }}">
+                                                        <input type="number" name="depend_age" value="{{ explode(',', $citizenII->depend_age)[1] }}" class="form-control" data-update="depend_age" data-model="CitizenII" data-array="1" data-cid="{{ $citizen->id }}">
                                                     </div> 
                                                     <div class="col-2">
                                                         <input type="checkbox" name="depend_working" class="checkbox mt2" value="0" @if(explode(',', $citizenII->depend_working)[1] == "0") checked @endif data-update="depend_working" data-array="1" data-model="CitizenII" data-cid="{{ $citizen->id }}"><strong style="padding: 5px;">Yes</strong>
@@ -452,10 +464,10 @@ body {
                                                         <input type="text" name="depend_occup" value="{{ explode(',', $citizenII->depend_occup)[2] }}" class="form-control" data-update="depend_occup" data-model="CitizenII" data-array="2" data-cid="{{ $citizen->id }}">
                                                     </div>
                                                     <div class="col-3">
-                                                        <input type="text" name="depend_income" value="{{ explode(',', $citizenII->depend_income)[2] }}" class="form-control" data-update="depend_income" data-model="CitizenII" data-array="2" data-cid="{{ $citizen->id }}">
+                                                        <input type="number" name="depend_income" value="{{ explode(',', $citizenII->depend_income)[2] }}" class="form-control" data-update="depend_income" data-model="CitizenII" data-array="2" data-cid="{{ $citizen->id }}">
                                                     </div>
                                                     <div class="col-1">
-                                                        <input type="text" name="depend_age" value="{{ explode(',', $citizenII->depend_age)[2] }}" class="form-control" data-update="depend_age" data-model="CitizenII" data-array="2" data-cid="{{ $citizen->id }}">
+                                                        <input type="number" name="depend_age" value="{{ explode(',', $citizenII->depend_age)[2] }}" class="form-control" data-update="depend_age" data-model="CitizenII" data-array="2" data-cid="{{ $citizen->id }}">
                                                     </div> 
                                                     <div class="col-2">
                                                         <input type="checkbox" name="depend_working" class="checkbox mt2" value="0" @if(explode(',', $citizenII->depend_working)[2] == "0") checked @endif data-update="depend_working" data-array="2" data-model="CitizenII" data-cid="{{ $citizen->id }}"><strong style="padding: 5px;">Yes</strong>
@@ -469,10 +481,10 @@ body {
                                                         <input type="text" name="depend_occup" value="{{ explode(',', $citizenII->depend_occup)[3] }}" class="form-control" data-update="depend_occup" data-model="CitizenII" data-array="3" data-cid="{{ $citizen->id }}">
                                                     </div>
                                                     <div class="col-3">
-                                                        <input type="text" name="depend_income" value="{{ explode(',', $citizenII->depend_income)[3] }}" class="form-control" data-update="depend_income" data-model="CitizenII" data-array="3" data-cid="{{ $citizen->id }}">
+                                                        <input type="number" name="depend_income" value="{{ explode(',', $citizenII->depend_income)[3] }}" class="form-control" data-update="depend_income" data-model="CitizenII" data-array="3" data-cid="{{ $citizen->id }}">
                                                     </div>
                                                     <div class="col-1">
-                                                        <input type="text" name="depend_age" value="{{ explode(',', $citizenII->depend_age)[3] }}" class="form-control" data-update="depend_age" data-model="CitizenII" data-array="3" data-cid="{{ $citizen->id }}">
+                                                        <input type="number" name="depend_age" value="{{ explode(',', $citizenII->depend_age)[3] }}" class="form-control" data-update="depend_age" data-model="CitizenII" data-array="3" data-cid="{{ $citizen->id }}">
                                                     </div> 
                                                     <div class="col-2">
                                                         <input type="checkbox" name="depend_working" class="checkbox mt2" value="0" @if(explode(',', $citizenII->depend_working)[3] == "0") checked @endif data-update="depend_working" data-array="3" data-model="CitizenII" data-cid="{{ $citizen->id }}"><strong style="padding: 5px;">Yes</strong>
@@ -528,13 +540,13 @@ body {
                                                         <div class="p-1 bg-info gen-label">28. Share Skill (Community Service)</div>
                                                     </div>
                                                     <div colspan="3" class="col-12">
-                                                        <input type="checkbox" class="checkbox" id="share_skill" name="share_skill" value="0" @if(explode(',', $citizenIII->share_skill)[0]  == "0") checked @endif  data-update="share_skill" data-array="0" data-model="CitizenIII" data-cid="{{ $citizen->id }}"><strong style="padding: 5px;">1</strong>
+                                                        <input type="text" name="share_skill" class="form-control" value="{{ explode(',', $citizenIII->share_skill)[0] }}" data-update="share_skill" data-model="CitizenIII" data-array="0" placeholder="Share Skill" data-cid="{{ $citizen->id }}">
                                                     </div>
                                                     <div colspan="3" class="col-12">
-                                                        <input type="checkbox" class="checkbox" id="share_skill" name="share_skill" value="1" @if(explode(',', $citizenIII->share_skill)[1]  == "1") checked @endif  data-update="share_skill" data-array="1" data-model="CitizenIII" data-cid="{{ $citizen->id }}"><strong style="padding: 5px;">2</strong>
+                                                        <input type="text" name="share_skill" class="form-control mt-1" value="{{ explode(',', $citizenIII->share_skill)[1] }}" data-update="share_skill" data-model="CitizenIII" data-array="1" placeholder="Share Skill" data-cid="{{ $citizen->id }}">
                                                     </div>
                                                     <div colspan="3" class="col-12">
-                                                        <input type="checkbox" class="checkbox" id="share_skill" name="share_skill" value="2" @if(explode(',', $citizenIII->share_skill)[2]  == "2") checked @endif  data-update="share_skill" data-array="2" data-model="CitizenIII" data-cid="{{ $citizen->id }}"><strong style="padding: 5px;">3</strong>
+                                                        <input type="text" name="share_skill" class="form-control mt-1" value="{{ explode(',', $citizenIII->share_skill)[2] }}" data-update="share_skill" data-model="CitizenIII" data-array="2" placeholder="Share Skill" data-cid="{{ $citizen->id }}">
                                                     </div>
                                                 </div>
                                                 <div class="row col-6">
@@ -1098,6 +1110,38 @@ body {
                                                         <input type="checkbox" id="med_schedyes" name="med_schedyes" class="checkbox mt2" value="2" @if($citizenBck->med_schedyes == "2") checked @endif data-update="med_schedyes" data-model="CitizenBck" data-cid="{{ $citizen->id }}"><strong style="padding: 5px;">Others</strong>
                                                     </div>
                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="custom-tabs-seven-syete" role="tabpanel" aria-labelledby="custom-tabs-seven-syete-tab">
+                                    <div class="card card-secondary">
+                                        <div class="card-header">
+                                            <h3 class="card-title">VII. Attachment</h3>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row col-8">
+                                                <div class="row col-12">
+                                                    <div class="col-6 mt-2 mb-2">
+                                                        <div class="p-1 bg-info gen-label">1. Signature</div>
+                                                    </div>
+                                                    <div class="col-6 mt-2 mb-2">
+                                                        <div class="p-1 bg-info gen-label">1. Thumbmark</div>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="border mb-2 paper"></div>
+                                                        <button class="btn btn-secondary">Start</button>
+                                                        <button class="btn btn-secondary">Save</button>
+                                                        <button class="btn btn-secondary">Clear</button>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <div class="border mb-2 paper"></div>
+                                                        <button class="btn btn-secondary">Start</button>
+                                                        <button class="btn btn-secondary">Save</button>
+                                                        <button class="btn btn-secondary">Clear</button>
+                                                    </div>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Crypt;
 use Carbon\Carbon;
 use PDF;
 
@@ -16,7 +17,9 @@ use App\Models\citizenBck;
 class CitizenController extends Controller
 {
     public function citizenRead() {
-        $citizen = Citizen::all();
+        $citizen = Citizen::join('citizen_i_s', 'citizens.id', '=', 'citizen_i_s.cid')
+                        ->select('citizens.*', 'citizen_i_s.*')
+                        ->get();
         return view ('citizen.list', compact('citizen'));
     }
 
@@ -26,7 +29,7 @@ class CitizenController extends Controller
                 'lname' => 'required|string',
                 'fname' => 'required|string',
                 'mname' => 'required|string',
-                'ext' => 'required|string',
+                'ext' => 'nullable|string',
             ]);
             
             $citizen = Citizen::create([
@@ -46,9 +49,24 @@ class CitizenController extends Controller
             ];
             
             foreach ($models as $model) {
-                $model::create([
-                    'cid' => $insertedID,
-                ]);
+                if ($model === CitizenI::class) {
+                    do {
+                        $randomNumber = mt_rand(10000, 99999); 
+                        $oscaIdNum = $randomNumber;
+            
+                        $existingRecord = $model::where('osca_idnum', $oscaIdNum)->first();
+            
+                    } while ($existingRecord);
+            
+                    $model::create([
+                        'cid' => $insertedID,
+                        'osca_idnum' => $oscaIdNum,
+                    ]);
+                } else {
+                    $model::create([
+                        'cid' => $insertedID,
+                    ]);
+                }
             }
     
             return redirect()->back()->with('success', 'Added Successfully');
@@ -58,7 +76,9 @@ class CitizenController extends Controller
         }
     }
 
-    public function citizenMoreInfo($id) {
+    public function citizenMoreInfo($encryptedId) {
+        $id = Crypt::decrypt($encryptedId);
+
         $citizen = Citizen::find($id);
         $citizenI = CitizenI::where('cid', $id)->first();
         $citizenII = citizenII::where('cid', $id)->first();
@@ -74,6 +94,7 @@ class CitizenController extends Controller
             $array = $request->array;
             $value = $request->value;
             $cid = $request->cid;
+            $age = $request->age;
            
             $model == "Citizen" ? $citizen = Citizen::find($cid) : '';
             $model == "CitizenI" ? $citizen = CitizenI::find($cid) : '';
@@ -83,7 +104,6 @@ class CitizenController extends Controller
     
             if ($citizen) {
                 if(isset($array)){
-                    // Get the current array value and explode it
                     $arrayVal = $citizen->$data;
                     $arrayVal = explode(",", $arrayVal);
                     $currentValue = isset($arrayVal[$array]) ? $arrayVal[$array] : null;
@@ -96,6 +116,7 @@ class CitizenController extends Controller
                 
                 else{
                     $citizen->$data = $value;
+                    $data == 'bday' ? $citizen->age =  $age : '';
                     $citizen->save();
                 }
                 return response()->json(['success' => 'Updated Successfully']);
@@ -108,11 +129,13 @@ class CitizenController extends Controller
     } 
     
     public function citizenReadPdf($id) {
+        $pdfdecryptedId = Crypt::decrypt($id);
+
         $citizen = Citizen::join('citizen_i_s', 'citizens.id', '=', 'citizen_i_s.cid')
         ->join('citizen_i_i_s', 'citizens.id', '=', 'citizen_i_i_s.cid')
         ->join('citizen_i_i_i_s', 'citizens.id', '=', 'citizen_i_i_i_s.cid')
         ->join('citizen_bcks', 'citizens.id', '=', 'citizen_bcks.cid')
-        ->where('citizens.id', $id)
+        ->where('citizens.id', $pdfdecryptedId)
         ->first();
         
         $pdf = PDF::loadView('citizen.list_pdf', compact('citizen'))->setPaper('legal', 'portrait');

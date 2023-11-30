@@ -37,10 +37,13 @@
                                     <thead>
                                         <tr>
                                             <th>No</th>
-                                            <th>Last Name</th>
-                                            <th>First Name</th>
-                                            <th>Middle Name</th>
-                                            <th>Ext. Name</th>
+                                            <th>OSCA ID No.</th>
+                                            <th>Name</th>
+                                            <th>Gender</th>
+                                            <th>Birthday</th>
+                                            <th>Age</th>
+                                            <th>Pensioner</th>
+                                            <th>Remarks</th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbody">
@@ -48,10 +51,13 @@
                                         @foreach($citizen as $data)
                                         <tr id="tr-{{ $data->id }}" class="">
                                             <td>{{ $no++ }}</td>
-                                            <td class="text-capitalize">{{ $data->lname }}</td>
-                                            <td class="text-capitalize">{{ $data->fname }}</td>
-                                            <td class="text-capitalize">{{ $data->mname }}</td>
-                                            <td class="text-capitalize">{{ $data->ext }}</td>
+                                            <td class="text-capitalize">{{ $data->osca_idnum }}</td>
+                                            <td class="text-capitalize">{{ $data->lname }}, {{ $data->fname }}  {{ $data->mname }} {{ $data->ext }}</td>
+                                            <td class="text-capitalize">{{ $data->gender }}</td>
+                                            <td class="text-capitalize">{{ \Carbon\Carbon::parse($data->bday)->format('F j, Y') }}</td>
+                                            <td class="text-capitalize">{{ $data->age }} yrs. old</td>
+                                            <td class="text-capitalize">{{ $data->curr_pension }} yrs. old</td>
+                                            <td class="text-capitalize"></td>
                                         </tr>
                                         @endforeach
                                     </tbody>

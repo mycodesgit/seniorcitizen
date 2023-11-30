@@ -41,7 +41,7 @@ Route::group(['middleware'=>['login_auth']],function(){
     Route::prefix('/data')->group(function () {
         Route::get('/list',[CitizenController::class,'citizenRead'])->name('citizenRead');
         Route::post('/citizen-create',[CitizenController::class,'citizenCreate'])->name('citizenCreate');
-        Route::get('/citizen-moreinfo/{id}',[CitizenController::class,'citizenMoreInfo'])->name('citizenMoreInfo');
+        Route::get('/citizen-moreinfo/{encryptedId}',[CitizenController::class,'citizenMoreInfo'])->name('citizenMoreInfo');
         Route::post('/citizen-upmoreinfo',[CitizenController::class,'MoreInfoUpdate'])->name('MoreInfoUpdate');
         Route::get('/list/pdf/{id}', [CitizenController::class, 'citizenReadPdf'])->name('citizenReadPdf');
     });

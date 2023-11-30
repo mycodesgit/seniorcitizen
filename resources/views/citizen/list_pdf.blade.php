@@ -366,7 +366,7 @@
                     </tr>
                     <tr>
                         <td class="default-font border-2 bold" colspan="3">
-                            <input type="checkbox" style="margin-bottom: 2px;" @if(explode(',', $citizen->share_skill)[0] != '') checked @endif> 1</td>
+                            <input type="checkbox" style="margin-bottom: 2px;" @if(explode(',', $citizen->share_skill)[0] != '') checked @endif> 1 @if(explode(',', $citizen->share_skill)[0] != '') {{ explode(',', $citizen->share_skill)[0] }} @endif</td>
                         </td>
                         <td class="border-2 default-font"><input type="checkbox" style="margin-bottom: 2px;" @if(explode(',', $citizen->area_techskill)[12] != '') checked @endif> Barber</td>
                         <td class="border-2 default-font"><input type="checkbox" style="margin-bottom: 2px;" @if(explode(',', $citizen->area_techskill)[13] != '') checked @endif> Mason</td>
@@ -374,7 +374,7 @@
                     </tr>
                     <tr>
                         <td class="default-font border-2 bold" colspan="3">
-                            <input type="checkbox" style="margin-bottom: 2px;" @if(explode(',', $citizen->share_skill)[1] != '') checked @endif> 2</td>
+                            <input type="checkbox" style="margin-bottom: 2px;" @if(explode(',', $citizen->share_skill)[1] != '') checked @endif> 2  @if(explode(',', $citizen->share_skill)[1] != '') {{ explode(',', $citizen->share_skill)[1] }} @endif</td>
                         </td>
                         <td class="border-2 default-font"><input type="checkbox" style="margin-bottom: 2px;" @if(explode(',', $citizen->area_techskill)[15] != '') checked @endif> Evangelization</td>
                         <td class="border-2 default-font"><input type="checkbox" style="margin-bottom: 2px;" @if(explode(',', $citizen->area_techskill)[16] != '') checked @endif> Tailor</td>
@@ -382,7 +382,7 @@
                     </tr>
                     <tr>
                         <td class="default-font border-2 bold" colspan="3">
-                            <input type="checkbox" style="margin-bottom: 2px;" @if(explode(',', $citizen->share_skill)[2] != '') checked @endif> 3</td>
+                            <input type="checkbox" style="margin-bottom: 2px;" @if(explode(',', $citizen->share_skill)[2] != '') checked @endif> 3  @if(explode(',', $citizen->share_skill)[2] != '') {{ explode(',', $citizen->share_skill)[2] }} @endif</td>
                         </td>
                         <td class="border-2 default-font"><input type="checkbox" style="margin-bottom: 2px;" @if(explode(',', $citizen->area_techskill)[18] != '') checked @endif> Millwright</td>
                         <td class="border-2 default-font" colspan="2"><input type="checkbox" style="margin-bottom: 2px;" @if(explode(',', $citizen->area_techskill)[19] != '') checked @endif> Others, specify: {{ explode(',', $citizen->area_techskill)[19] }}</td>

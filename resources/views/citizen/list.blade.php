@@ -47,6 +47,9 @@
                                             <th>First Name</th>
                                             <th>Middle Name</th>
                                             <th>Ext. Name</th>
+                                            <th>Gender</th>
+                                            <th>Birthday</th>
+                                            <th>Age</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -59,9 +62,12 @@
                                             <td class="text-capitalize">{{ $data->fname }}</td>
                                             <td class="text-capitalize">{{ $data->mname }}</td>
                                             <td class="text-capitalize">{{ $data->ext }}</td>
+                                            <td class="text-capitalize">{{ $data->gender }}</td>
+                                            <td class="text-capitalize">{{ \Carbon\Carbon::parse($data->bday)->format('F j, Y') }}</td>
+                                            <td class="text-capitalize">{{ $data->age }} yrs. old</td>
                                             <td>
                                                 
-                                                <a href="{{ route('citizenReadPdf', ['id' => $data->id]) }}" target="_blank" class="btn btn-warning btn-xs btn-edit">
+                                                <a href="{{ route('citizenReadPdf', ['id' => encrypt($data->id)]) }}" target="_blank" class="btn btn-warning btn-xs btn-edit">
                                                     <i class="fas fa-file-pdf"></i>
                                                 </a>
 
@@ -69,7 +75,7 @@
                                                     <i class="fas fa-id-card"></i>
                                                 </a>
 
-                                                <a href="{{ route('citizenMoreInfo', ['id' => $data->id]) }}" class="btn btn-info btn-xs btn-edit">
+                                                <a href="{{ route('citizenMoreInfo', ['encryptedId' => encrypt($data->id)]) }}" class="btn btn-info btn-xs btn-edit">
                                                     <i class="fas fa-exclamation-circle"></i>
                                                 </a>
                                                 <button value="{{ $data->id }}" class="btn btn-danger btn-xs citizen-delete">

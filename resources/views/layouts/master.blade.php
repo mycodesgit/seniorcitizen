@@ -151,6 +151,11 @@
     <script src="{{ asset('template/plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
     <script src="{{ asset('template/plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
 
+    <!-- jQuery Knob -->
+    <script src="{{ asset('template/plugins/jquery-knob/jquery.knob.min.js') }}"></script>
+    <!-- ChartJS -->
+    <script src="{{ asset('template/plugins/chart.js/Chart.min.js') }}"></script>
+
     <!-- jquery-validation -->
     <script src="{{ asset('template/plugins/jquery-validation/jquery.validate.min.js') }}"></script>
     <script src="{{ asset('template/plugins/jquery-validation/additional-methods.min.js') }}"></script>
@@ -165,6 +170,84 @@
 
     <!-- dynamic dropdown -->
     <script src="{{ asset('js/form-script.js') }}"></script>
+
+
+    <script>
+        $(function () {
+
+            var pieChartCanvas = $('#pieChart').get(0).getContext('2d')
+            var femaleAge6069Count = $('#pieChart').data('female-age-60-69');
+            var femaleAge7079Count = $('#pieChart').data('female-age-70-79');
+            var femaleAge8089Count = $('#pieChart').data('female-age-80-89');
+            var femaleAge9099Count = $('#pieChart').data('female-age-90-99');
+            var femaleAge100109Count = $('#pieChart').data('female-age-100-109');
+            var femaleAge110119Count = $('#pieChart').data('female-age-110-119');
+            var femaleAge120129Count = $('#pieChart').data('female-age-120-129');
+            var pieData = {
+                labels: [
+                    'Female Age Bracket 60-69',
+                    'Female Age Bracket 70-79',
+                    'Female Age Bracket 80-89',
+                    'Female Age Bracket 90-99',
+                    'Female Age Bracket 100-109',
+                    'Female Age Bracket 110-119',
+                    'Female Age Bracket 120-129',
+                ],
+                datasets: [
+                    {
+                        data: [femaleAge6069Count, femaleAge7079Count, femaleAge8089Count, femaleAge9099Count, femaleAge100109Count, femaleAge110119Count, femaleAge120129Count],
+                        backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de', '#6c757d']
+                    }
+                ]
+            }
+            var pieOptions = {
+                legend: {
+                    display: false
+                }
+            }
+            var pieChart = new Chart(pieChartCanvas, {
+                type: 'doughnut',
+                data: pieData,
+                options: pieOptions
+            });
+
+            var pieChartCanvas = $('#pieChart1').get(0).getContext('2d')
+            var maleAge6069Count = $('#pieChart1').data('male-age-60-69');
+            var maleAge7079Count = $('#pieChart1').data('male-age-70-79');
+            var maleAge8089Count = $('#pieChart1').data('male-age-80-89');
+            var maleAge9099Count = $('#pieChart1').data('male-age-90-99');
+            var maleAge100109Count = $('#pieChart1').data('male-age-100-109');
+            var maleAge110119Count = $('#pieChart1').data('male-age-110-119');
+            var maleAge120129Count = $('#pieChart1').data('male-age-120-129');
+            var pieData = {
+                labels: [
+                    'Male Age Bracket 60-69',
+                    'Male Age Bracket 70-79',
+                    'Male Age Bracket 80-89',
+                    'Male Age Bracket 90-99',
+                    'Male Age Bracket 100-109',
+                    'Male Age Bracket 110-119',
+                    'Male Age Bracket 120-129',
+                ],
+                datasets: [
+                    {
+                        data: [maleAge6069Count, maleAge7079Count, maleAge8089Count, maleAge9099Count, maleAge100109Count, maleAge110119Count, maleAge120129Count],
+                        backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de', '#6c757d']
+                    }
+                ]
+            }
+            var pieOptions = {
+                legend: {
+                    display: false
+                }
+            }
+            var pieChart1 = new Chart(pieChartCanvas, {
+                type: 'doughnut',
+                data: pieData,
+                options: pieOptions
+            })
+        });
+    </script>
 
     <script>
         @if(Session::has('error'))
@@ -228,6 +311,24 @@
             var value = $(this).val();
             var model = $(this).data('model');
             var array = $(this).data('array');
+            var age = "";
+
+            if(data == "bday"){
+                var selectedDate = value;
+                var birthDate = new Date(selectedDate);
+                var currentDate = new Date();
+                var age = currentDate.getFullYear() - birthDate.getFullYear();
+
+                if (
+                    currentDate.getMonth() < birthDate.getMonth() ||
+                    (currentDate.getMonth() === birthDate.getMonth() && currentDate.getDate() < birthDate.getDate())
+                ) {
+                    age--;
+                }
+
+                document.getElementById("age").value = age;
+
+            }
 
             var cid = $(this).data('cid');
 
@@ -241,6 +342,7 @@
                     model: model,
                     array: array,
                     cid: cid,
+                    age: age,
                 },
                 success: function(response) {
                     if (response.success) {
